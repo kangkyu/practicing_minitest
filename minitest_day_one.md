@@ -1,8 +1,8 @@
 #minitest practice 03-12-14
 
 ```r
-rails new minitest_practice
-cd minitest_practice
+rails new practicing_minitest
+cd practicing_minitest
 subl .
 ```
 
