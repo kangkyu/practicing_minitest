@@ -1,4 +1,4 @@
-#minitest practice 03-12-14
+#minitest practice 03-12-15
 
 ```r
 rails new practicing_minitest
@@ -277,4 +277,82 @@ rake test:models
 rake test
 
 => pass!
+```
+
+```
+rails generate integration_test posts_show
+```
+
+```rb
+# test/integration/posts_show_test.rb
+
+require 'test_helper'
+
+class PostsShowTest < ActionDispatch::IntegrationTest
+  def setup
+    @post = posts(:one)
+  end
+
+  test "show detail of a post" do
+    get post_path(@post)
+    assert_response :success
+    assert_template "show"
+  end
+end
+
+```
+```r
+# test/fixtures/posts.yml
+one:
+  title: title one
+  body: body one
+two:
+  title: title two
+  body: body two
+
+```
+```
+rake test
+=> undefined method `post_path'
+```
+```rb
+  resources :posts
+```
+```
+rake test
+=> The action 'show' could not be found for PostsController
+
+rake test:controllers
+```
+```rb
+  def setup
+    @post = posts(:one)
+  end
+
+  test "should get show" do
+    get :show, id: @post.id
+    assert_response :success
+  end
+```
+```
+rake test:controllers
+=> The action 'show' could not be found for PostsController
+```
+
+```rb
+  def show
+  end
+```
+
+```
+rake test:controllers
+=> Missing template posts/show
+
+touch app/views/posts/show.html.erb
+
+rake test:controllers
+=> pass
+
+rake test
+=> pass
 ```
